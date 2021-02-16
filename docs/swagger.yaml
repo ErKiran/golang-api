@@ -1,0 +1,122 @@
+basePath: /
+definitions:
+  controllers.ContactInfo:
+    properties:
+      country:
+        type: string
+      mobileNumber:
+        type: string
+    type: object
+  controllers.CreateUserResponse:
+    properties:
+      success:
+        type: boolean
+    type: object
+  controllers.GetUsersResponse:
+    properties:
+      success:
+        type: boolean
+      users:
+        $ref: '#/definitions/controllers.UserResponse'
+    type: object
+  controllers.Result:
+    properties:
+      data:
+        $ref: '#/definitions/controllers.SortingResponse'
+      success:
+        type: boolean
+    type: object
+  controllers.SortingRequest:
+    properties:
+      unsorted:
+        items:
+          type: integer
+        type: array
+    type: object
+  controllers.SortingResponse:
+    properties:
+      sorted:
+        items:
+          type: integer
+        type: array
+      unsorted:
+        items:
+          type: integer
+        type: array
+    type: object
+  controllers.UserResponse:
+    properties:
+      contactInfo:
+        $ref: '#/definitions/controllers.ContactInfo'
+      email:
+        type: string
+      userName:
+        type: string
+    type: object
+info:
+  contact:
+    email: kiruu1238@gmail.com
+    name: Restful API's
+  description: Rest API for Test project
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Rest API
+  version: 1.0.0
+paths:
+  /sort:
+    post:
+      consumes:
+      - application/json
+      description: This API Endpoint is used to sort array of numbers
+      parameters:
+      - description: request
+        in: body
+        name: ticket
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.SortingRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controllers.Result'
+      summary: Sort the Array of numbers accordingly to per-defined criteria
+      tags:
+      - sort
+  /user:
+    get:
+      consumes:
+      - application/json
+      description: This API will get all users and contacts details and merge the
+        two details together and send the response back
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controllers.GetUsersResponse'
+      summary: Get All Users of the Database
+      tags:
+      - users
+    post:
+      consumes:
+      - application/json
+      description: This API Endpoint is used to insert user data and contact Details
+        in the Postgres Database
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controllers.CreateUserResponse'
+      summary: Seed One user at a time using Faker Library for fake data and Gorm
+        as ORM
+      tags:
+      - users
+swagger: "2.0"

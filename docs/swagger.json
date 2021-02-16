@@ -1,0 +1,183 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Rest API for Test project",
+        "title": "Rest API",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "name": "Restful API's",
+            "email": "kiruu1238@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0"
+    },
+    "basePath": "/",
+    "paths": {
+        "/sort": {
+            "post": {
+                "description": "This API Endpoint is used to sort array of numbers",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "sort"
+                ],
+                "summary": "Sort the Array of numbers accordingly to per-defined criteria",
+                "parameters": [
+                    {
+                        "description": "request",
+                        "name": "ticket",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controllers.SortingRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/controllers.Result"
+                        }
+                    }
+                }
+            }
+        },
+        "/user": {
+            "get": {
+                "description": "This API will get all users and contacts details and merge the two details together and send the response back",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "Get All Users of the Database",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/controllers.GetUsersResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "This API Endpoint is used to insert user data and contact Details in the Postgres Database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "Seed One user at a time using Faker Library for fake data and Gorm as ORM",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/controllers.CreateUserResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "controllers.ContactInfo": {
+            "type": "object",
+            "properties": {
+                "country": {
+                    "type": "string"
+                },
+                "mobileNumber": {
+                    "type": "string"
+                }
+            }
+        },
+        "controllers.CreateUserResponse": {
+            "type": "object",
+            "properties": {
+                "success": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "controllers.GetUsersResponse": {
+            "type": "object",
+            "properties": {
+                "success": {
+                    "type": "boolean"
+                },
+                "users": {
+                    "$ref": "#/definitions/controllers.UserResponse"
+                }
+            }
+        },
+        "controllers.Result": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/controllers.SortingResponse"
+                },
+                "success": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "controllers.SortingRequest": {
+            "type": "object",
+            "properties": {
+                "unsorted": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                }
+            }
+        },
+        "controllers.SortingResponse": {
+            "type": "object",
+            "properties": {
+                "sorted": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "unsorted": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                }
+            }
+        },
+        "controllers.UserResponse": {
+            "type": "object",
+            "properties": {
+                "contactInfo": {
+                    "$ref": "#/definitions/controllers.ContactInfo"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "userName": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
